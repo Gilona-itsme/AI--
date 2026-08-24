@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI та ресурси для дизайнерів · Розширена версія</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0b10;
+    --bg-soft:#0d0f17;
+    --glass:rgba(255,255,255,0.045);
+    --glass-hover:rgba(255,255,255,0.075);
+    --border:rgba(255,255,255,0.09);
+    --text:#eef0f7;
+    --muted:#9aa0b8;
+    --muted-2:#6b7086;
+    --accent:#9b90ff;
+    --accent-soft:rgba(155,144,255,0.15);
+    --free:#7eeecb;
+    --free-soft:rgba(126,238,203,0.12);
+    --freemium:#9b90ff;
+    --freemium-soft:rgba(155,144,255,0.14);
+    --paid:#ffb37e;
+    --paid-soft:rgba(255,179,126,0.13);
+    --mono:'JetBrains Mono', monospace;
+    --display:'Space Grotesk', sans-serif;
+    --body:'Inter', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      radial-gradient(circle at 1px 1px, rgba(255,255,255,0.07) 1px, transparent 0) 0 0/22px 22px,
+      radial-gradient(ellipse 900px 600px at 15% -5%, rgba(155,144,255,0.10), transparent 60%),
+      radial-gradient(ellipse 800px 500px at 100% 20%, rgba(126,238,203,0.06), transparent 60%),
+      var(--bg);
+    color:var(--text);
+    font-family:var(--body);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit; text-decoration:none;}
+  ::selection{background:var(--accent-soft); color:var(--text);}
+
+  /* Header */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(10,11,16,0.82);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);
+  }
+  .header-top{
+    max-width:1200px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 24px;
+    gap:16px;
+  }
+  .brand{
+    font-family:var(--display); font-weight:600; font-size:15px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .brand-dot{width:7px; height:7px; border-radius:50%; background:var(--accent); box-shadow:0 0 12px var(--accent);}
+  nav.pillnav{
+    display:flex; gap:4px; overflow-x:auto; scrollbar-width:none;
+    font-family:var(--mono); font-size:12.5px;
+  }
+  nav.pillnav::-webkit-scrollbar{display:none;}
+  nav.pillnav a{
+    padding:7px 13px; border-radius:100px; color:var(--muted);
+    white-space:nowrap; transition:all .2s;
+    border:1px solid transparent;
+  }
+  nav.pillnav a:hover{color:var(--text); background:var(--glass); border-color:var(--border);}
+
+  /* Hero */
+  .hero{max-width:1200px; margin:0 auto; padding:64px 24px 40px;}
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.06em;
+    color:var(--accent); text-transform:uppercase;
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--accent-soft); border:1px solid rgba(155,144,255,0.25);
+    padding:5px 12px; border-radius:100px; margin-bottom:22px;
+  }
+  h1{
+    font-family:var(--display); font-weight:700;
+    font-size:clamp(32px, 5.2vw, 56px);
+    line-height:1.06; letter-spacing:-0.02em;
+    max-width:15ch;
+  }
+  h1 em{font-style:normal; color:var(--accent);}
+  .hero-desc{
+    max-width:640px; color:var(--muted); font-size:16.5px; line-height:1.65;
+    margin-top:22px;
+  }
+  .hero-desc strong{color:var(--text); font-weight:600;}
+  .stats{display:flex; gap:36px; margin-top:36px; flex-wrap:wrap;}
+  .stat b{font-family:var(--display); font-size:30px; display:block; color:var(--text);}
+  .stat span{font-family:var(--mono); font-size:11.5px; color:var(--muted-2); text-transform:uppercase; letter-spacing:.04em;}
+
+  .legend{display:flex; gap:10px; flex-wrap:wrap; margin-top:34px;}
+  .legend .badge{cursor:default;}
+
+  /* Controls */
+  .controls{
+    max-width:1200px; margin:0 auto; padding:0 24px 8px;
+    display:flex; gap:12px; flex-wrap:wrap; align-items:center;
+    position:sticky; top:65px; z-index:40;
+  }
+  .search-wrap{position:relative; flex:1; min-width:220px;}
+  .search-wrap svg{position:absolute; left:14px; top:50%; transform:translateY(-50%); opacity:.5;}
+  #search{
+    width:100%; background:var(--glass); border:1px solid var(--border);
+    border-radius:12px; padding:12px 14px 12px 40px; color:var(--text);
+    font-family:var(--body); font-size:14px; outline:none;
+    backdrop-filter:blur(10px);
+  }
+  #search:focus{border-color:var(--accent); background:rgba(255,255,255,0.06);}
+  #search::placeholder{color:var(--muted-2);}
+  .filter-group{display:flex; gap:6px;}
+  .filter-btn{
+    font-family:var(--mono); font-size:12px; padding:10px 15px; border-radius:12px;
+    border:1px solid var(--border); background:var(--glass); color:var(--muted);
+    cursor:pointer; transition:all .18s; white-space:nowrap;
+  }
+  .filter-btn:hover{color:var(--text); border-color:rgba(255,255,255,0.2);}
+  .filter-btn.active{color:var(--bg); background:var(--text); border-color:var(--text);}
+  #count-info{font-family:var(--mono); font-size:12px; color:var(--muted-2); padding:0 24px; max-width:1200px; margin:10px auto 0;}
+
+  /* Sections */
+  main{max-width:1200px; margin:0 auto; padding:36px 24px 90px;}
+  section{padding-top:52px; scroll-margin-top:120px;}
+  section:first-of-type{padding-top:20px;}
+  .sec-head{display:flex; align-items:baseline; gap:16px; margin-bottom:8px; flex-wrap:wrap;}
+  .sec-num{font-family:var(--mono); color:var(--accent); font-size:13px;}
+  .sec-title{font-family:var(--display); font-weight:600; font-size:26px; letter-spacing:-0.01em;}
+  .sec-title b{color:var(--accent); font-weight:600;}
+  .sec-count{font-family:var(--mono); font-size:12px; color:var(--muted-2); background:var(--glass); border:1px solid var(--border); padding:3px 10px; border-radius:100px;}
+  .sec-note{color:var(--muted); font-size:14.5px; max-width:70ch; margin:10px 0 28px; line-height:1.6;}
+  .divider{height:1px; background:linear-gradient(90deg, var(--border), transparent); margin:44px 0 0;}
+
+  .group-label{
+    font-family:var(--mono); font-size:11.5px; text-transform:uppercase; letter-spacing:.05em;
+    color:var(--muted-2); margin:26px 0 14px; display:flex; align-items:center; gap:10px;
+  }
+  .group-label::after{content:''; flex:1; height:1px; background:var(--border);}
+
+  .grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(290px, 1fr)); gap:12px;}
+
+  .card{
+    background:var(--glass); border:1px solid var(--border); border-radius:16px;
+    padding:18px 18px 16px; transition:all .2s ease;
+    display:flex; flex-direction:column; gap:9px;
+    position:relative; overflow:hidden;
+  }
+  .card:hover{background:var(--glass-hover); border-color:rgba(155,144,255,0.35); transform:translateY(-2px);}
+  .card-head{display:flex; align-items:flex-start; justify-content:space-between; gap:10px;}
+  .card-name{font-family:var(--display); font-weight:600; font-size:16.5px; display:flex; align-items:center; gap:6px;}
+  .card-name svg{opacity:.55; transition:transform .2s, opacity .2s; flex-shrink:0;}
+  .card:hover .card-name svg{opacity:1; transform:translate(2px,-2px);}
+  .badge{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.03em; text-transform:uppercase;
+    padding:3px 9px; border-radius:100px; white-space:nowrap; flex-shrink:0;
+  }
+  .badge.free{color:var(--free); background:var(--free-soft);}
+  .badge.freemium{color:var(--freemium); background:var(--freemium-soft);}
+  .badge.paid{color:var(--paid); background:var(--paid-soft);}
+  .card-what{font-size:13.5px; color:var(--text); opacity:.92; line-height:1.5;}
+  .card-why{font-size:12.5px; color:var(--muted); line-height:1.5; padding-top:2px; border-top:1px dashed var(--border); margin-top:2px; padding-top:8px;}
+  .card-why b{color:var(--muted-2); font-family:var(--mono); font-weight:400; font-size:10.5px; text-transform:uppercase; margin-right:5px;}
+  .card a.overlay-link{position:absolute; inset:0;}
+
+  .hidden{display:none !important;}
+  .no-results{color:var(--muted-2); font-family:var(--mono); font-size:13px; padding:40px 0; text-align:center;}
+
+  footer{
+    max-width:1200px; margin:0 auto; padding:40px 24px 60px;
+    border-top:1px solid var(--border); margin-top:40px;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;
+  }
+  footer .fnote{color:var(--muted-2); font-size:13px; font-family:var(--mono);}
+  footer a{color:var(--accent);}
+
+  @media (max-width:640px){
+    .header-top{flex-wrap:wrap;}
+    nav.pillnav{width:100%; order:3;}
+    .controls{position:static;}
+    .stats{gap:22px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="brand"><span class="brand-dot"></span>AI-ресурси · дизайнерам</div>
+    <nav class="pillnav">
+      <a href="#free">01 Безкоштовно</a>
+      <a href="#screenshots">02 Скріншоти</a>
+      <a href="#ai">03 AI-інструменти</a>
+      <a href="#video">04 Відео</a>
+      <a href="#ui">05 UI</a>
+      <a href="#stocks">06 Стоки</a>
+      <a href="#inspire">07 Натхнення</a>
+      <a href="#assets">08 Асети</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <span class="eyebrow">● Найактуальніша підбірка · 2026 · розширена версія</span>
+  <h1>AI та ресурси для <em>дизайнерів</em></h1>
+  <p class="hero-desc">
+    Це розширена версія оригінальної підбірки — <strong>та сама структура й ті самі 111 посилань</strong>,
+    але до кожного додано пояснення, <strong>що саме робить інструмент</strong>, <strong>чим він корисний
+    саме дизайнеру чи фронтенд-розробнику</strong>, і головне — <strong>чи він безкоштовний</strong>.
+    Все розділено на 8 категорій: від AI-чатів і генераторів зображень до фотостоків, іконок і джерел натхнення.
+    Клікабельна кожна картка — вона веде прямо на офіційний сайт інструмента.
+  </p>
+  <div class="stats">
+    <div class="stat"><b>111</b><span>Ресурсів</span></div>
+    <div class="stat"><b>8</b><span>Категорій</span></div>
+    <div class="stat"><b id="free-count">—</b><span>Повністю безкоштовних</span></div>
+  </div>
+  <div class="legend">
+    <span class="badge free legend">Безкоштовно — без обмежень по грошах</span>
+    <span class="badge freemium legend">Freemium — є free-план, платні фічі опційно</span>
+    <span class="badge paid legend">Платно — переважно за підпискою</span>
+  </div>
+</div>
+
+<div class="controls">
+  <div class="search-wrap">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    <input id="search" type="text" placeholder="Пошук по назві або призначенню… наприклад «іконки» або «відео»">
+  </div>
+  <div class="filter-group" id="filter-group">
+    <button class="filter-btn active" data-price="all">Все</button>
+    <button class="filter-btn" data-price="free">Безкоштовно</button>
+    <button class="filter-btn" data-price="freemium">Freemium</button>
+    <button class="filter-btn" data-price="paid">Платно</button>
+  </div>
+</div>
+<div id="count-info"></div>
+
+<main id="main"></main>
+
+<footer>
+  <div class="fnote">на основі оригінальної підбірки — <a href="https://ponomar.academy" target="_blank" rel="noopener">ponomar.academy</a></div>
+  <div class="fnote">розширена версія · 2026</div>
+</footer>
+
+<script>
+const priceLabel = {free:'Безкоштовно', freemium:'Freemium', paid:'Платно'};
+
+const DATA = [
+{
+  id:'free', num:'01', title:'Безкоштовні інструменти',
+  note:'Шість інструментів, якими можна користуватись повноцінно без жодної оплати — хороша стартова точка, якщо тільки починаєш працювати з AI.',
+  groups:[{items:[
+    {name:'Claude', url:'https://claude.ai', price:'freemium', what:'AI-асистент для тексту, аналізу й копірайтингу від Anthropic.', why:'Пише точні, стилістично охайні тексти — статті, UX-копі, пояснення складних речей простою мовою.'},
+    {name:'NanoBanana в Flow', url:'https://labs.google/fx/tools/flow', price:'free', what:'Генератор фотореалістичних зображень всередині Google Flow.', why:'Щоденний безкоштовний ліміт без прив’язки картки — зручно швидко тестувати ідеї для мудбордів.'},
+    {name:'Gemini', url:'https://gemini.google.com', price:'freemium', what:'Мультимодальна AI-модель від Google з доступом до актуальних даних.', why:'Добре аналізує зображення й документи, підходить для рісерчу трендів у реальному часі.'},
+    {name:'ChatGPT', url:'https://chatgpt.com', price:'freemium', what:'Найпопулярніший AI-асистент для текстів, ідей, коду й аналізу зображень.', why:'Універсальний інструмент на щодень — від брейнштормінгу назв до пояснення технічних термінів.'},
+    {name:'Google AI Studio', url:'https://aistudio.google.com', price:'free', what:'Плейграунд для моделей Gemini від Google.', why:'Безкоштовний доступ до потужних моделей і мультимодального аналізу без підписки.'},
+    {name:'Google Labs FX', url:'https://labs.google/fx/uk', price:'free', what:'Хаб експериментальних AI-інструментів Google.', why:'Тут з’являються нові фічі ще до офіційного релізу — можна протестувати першими.'},
+  ]}]
+},
+{
+  id:'screenshots', num:'02', title:'Скріншоти',
+  note:'Швидкі гарячі клавіші та одна рекомендована програма — щоб не гуглити щоразу, як зробити скрін для макета чи презентації.',
+  groups:[{items:[
+    {name:'macOS — гарячі клавіші', url:'https://support.apple.com/en-us/102646', price:'free', what:'Весь екран ⌘+⇧+3, виділена область ⌘+⇧+4, вікно — ⌘+⇧+4 потім пробіл, у буфер обміну — додай ⌃.', why:'Вбудовано в систему — не треба нічого встановлювати.'},
+    {name:'Windows — Greenshot', url:'https://www.greenshot.org/', price:'free', what:'Весь екран PrtSc, поточне вікно Alt+PrtSc, виділена область ⊞+⇧+S; Greenshot додає анотації.', why:'Проста й безкоштовна програма з можливістю одразу підписати чи виділити скрін.'},
+  ]}]
+},
+{
+  id:'ai', num:'03', title:'AI-інструменти',
+  note:'23 інструменти для генерації сайтів, брендингу, спілкування з AI та створення зображень — розбито на чотири підкатегорії за задачею.',
+  groups:[
+    {label:'Сайтбілдери та дизайн', items:[
+      {name:'Lovable', url:'https://lovable.dev/invite/B1N7YCZ', price:'freemium', what:'Генерує повноцінні сайти й веб-застосунки з текстового промпту.', why:'Отримуєш робочий код і готовий деплой без написання жодного рядка вручну.'},
+      {name:'Stitch', url:'https://stitch.withgoogle.com/', price:'free', what:'AI від Google для дизайну інтерфейсів прямо в браузері.', why:'Генерує UI-макети з текстового опису — швидкий старт для вайрфреймів.'},
+      {name:'Aura Build', url:'https://www.aura.build/', price:'freemium', what:'AI-дизайнер, що мислить дизайнерськими патернами.', why:'Створює лендінги й UI з промптів і одразу експортує в HTML або Figma.'},
+      {name:'Orchids', url:'https://www.orchids.app/', price:'freemium', what:'Fullstack AI-інженер для будь-якого стеку.', why:'Може клонувати наявні сайти й працює з твоїми підписками ChatGPT/Claude.'},
+      {name:'Dora', url:'https://dora.run', price:'freemium', what:'Конструктор 3D-анімаційних сайтів без коду.', why:'Складна графіка й ефекти прямо в браузері — заміна Three.js чи Webflow для візуальних проєктів.'},
+      {name:'Relume', url:'https://relume.io', price:'freemium', what:'AI генерує структуру сайту й копірайт за коротким брифом.', why:'Ідеальний перший крок проєкту — від карти сайту до вайрфреймів за хвилини.'},
+    ]},
+    {label:'Дизайн та брендинг', items:[
+      {name:'Canva', url:'https://www.canva.com', price:'freemium', what:'Мегаплатформа для дизайну, відео, презентацій і соцмереж з вбудованим AI.', why:'Все в одному місці для соло-дизайнера чи невеликої команди.'},
+      {name:'Kittl', url:'https://www.kittl.com', price:'freemium', what:'Інструмент для брендингу, логотипів, постерів і копіювання стилів.', why:'Швидко пакує ідею в готовий бренд-візуал.'},
+      {name:'Lovart', url:'https://lovart.ai', price:'freemium', what:'AI для презентацій, курсів, лендінгів і маркетингових креативів.', why:'Швидко перетворює текстову ідею на візуальний контент для клієнтів.'},
+    ]},
+    {label:'Чат-асистенти', items:[
+      {name:'ChatGPT', url:'https://chatgpt.com', price:'freemium', what:'Тексти, ідеї, сценарії та структура; аналізує зображення й генерує код.', why:'Гарний варіант для швидкого сценарію чи структури тексту, коли треба одразу кілька варіантів.'},
+      {name:'Claude', url:'https://claude.ai', price:'freemium', what:'AI з глибоким reasoning, точним стилем і безпечними відповідями.', why:'Найточніший вибір, коли важливий стиль і довгий контекст — від ТЗ до кейс-стаді.'},
+      {name:'NotebookLM', url:'https://notebooklm.google.com', price:'free', what:'AI-асистент від Google для роботи з власними PDF та документами.', why:'Задаєш питання прямо до бази знань чи брифу клієнта — не гортаєш вручну.'},
+      {name:'Notion AI', url:'https://www.notion.so/product/ai', price:'paid', what:'AI прямо в робочому просторі Notion.', why:'Пише, редагує й підсумовує нотатки без виходу з команди.'},
+      {name:'Microsoft Copilot', url:'https://copilot.microsoft.com', price:'free', what:'Пошук + AI від Microsoft із доступом до актуальних даних у реальному часі.', why:'Добре підходить для рісерчу й брейнштормінгу, коли треба свіжа інформація.'},
+      {name:'Perplexity', url:'https://www.perplexity.ai', price:'freemium', what:'AI-пошуковик, що дає відповіді з реальними джерелами.', why:'Найкращий вибір для рісерчу — посилання замість голослівного тексту.'},
+    ]},
+    {label:'Генерація зображень', items:[
+      {name:'NanoBanana у Flow', url:'https://labs.google/fx/tools/flow', price:'free', what:'Фотореалістичні зображення через Google Flow.', why:'Безкоштовні щоденні генерації без реєстрації картки.'},
+      {name:'Midjourney', url:'https://midjourney.com', price:'paid', what:'Еталон художньої AI-генерації зображень.', why:'Концепт-арти, ілюстрації й брендові образи неймовірної якості — через Discord або web.'},
+      {name:'Ideogram', url:'https://ideogram.ai', price:'freemium', what:'AI, що вміє точно вписувати текст у зображення.', why:'Постери, обкладинки й типографічні композиції без спотвореного тексту.'},
+      {name:'Leonardo AI', url:'https://leonardo.ai', price:'freemium', what:'Універсальний генератор із великою бібліотекою стилів і моделей.', why:'Особливо сильний для геймдизайну й концепт-арту.'},
+      {name:'PhotoRoom', url:'https://www.photoroom.com', price:'freemium', what:'AI для товарних і e-commerce фото.', why:'Видаляє фон і створює студійні сцени для продуктових знімків за секунди.'},
+      {name:'Flair', url:'https://flair.ai', price:'freemium', what:'AI-генератор рекламних віжуалів.', why:'Завантажуєш продукт — отримуєш готову рекламну сцену для маркетинг-команди.'},
+      {name:'WeShop', url:'https://weshop.ai', price:'paid', what:'AI-студія для фото одягу й товарів без фотографа.', why:'Розміщує продукт у реалістичну студійну сцену за лічені хвилини.'},
+      {name:'Freepik AI', url:'https://www.freepik.com/ai', price:'freemium', what:'AI-генерація зображень, векторів і мокапів від Freepik.', why:'Великий безкоштовний денний ліміт для швидких ідей.'},
+    ]},
+  ]
+},
+{
+  id:'video', num:'04', title:'AI-відео та анімації',
+  note:'10 сервісів генерації й обробки відео — від text-to-video до стилізації вже готових роликів.',
+  groups:[{items:[
+    {name:'Higgsfield', url:'https://higgsfield.ai', price:'freemium', what:'AI-відео з акцентом на сторітелінг і наративний контент.', why:'Підходить для емоційних рекламних відеоісторій бренду.'},
+    {name:'Kling AI', url:'https://klingai.com', price:'freemium', what:'Один з найсильніших відеогенераторів на ринку.', why:'Видатний фотореалізм і плавні рухи за доступною ціною.'},
+    {name:'Veo у Flow', url:'https://labs.google/fx/tools/flow', price:'free', what:'Генерація відео від Google DeepMind просто у Flow.', why:'Анімує статичне зображення у відео — найкращий безкоштовний варіант серед відеогенераторів.'},
+    {name:'Leonardo AI', url:'https://leonardo.ai', price:'freemium', what:'Генерація зображень і анімація — великий вибір стилів і моделей.', why:'Animate Feature перетворює вже згенероване зображення на анімацію.'},
+    {name:'Pika Labs', url:'https://pika.art', price:'freemium', what:'Image-to-video і text-to-video генератор.', why:'Простий і швидкий спосіб оживити статичну картинку за секунди.'},
+    {name:'Hailuo AI', url:'https://hailuoai.video', price:'freemium', what:'Швидка і якісна відеогенерація.', why:'Популярна дешевша альтернатива Runway серед контент-мейкерів.'},
+    {name:'Runway ML', url:'https://runwayml.com', price:'freemium', what:'Gen-4 — найпотужніший AI-відеоредактор.', why:'Генерація, ротоскопія й стилізація — незамінний інструмент моушн-дизайнера.'},
+    {name:'Kaiber', url:'https://kaiber.ai', price:'freemium', what:'Стилізація відео під художній арт чи анімацію.', why:'Популярний вибір для музичного та артового контенту.'},
+    {name:'Luma Dream Machine', url:'https://lumalabs.ai/dream-machine', price:'freemium', what:'3D-візуалізації, NeRF та відео-генерація.', why:'Кінематографічні рухи камери й дуже реалістична якість сцен.'},
+    {name:'Wonder Studio', url:'https://www.autodesk.com/products/flow-studio/overview', price:'paid', what:'Автоматично додає 3D-персонажів у реальне відео.', why:'Освітлення й VFX без ручної роботи — майбутнє кінозйомки для інді-проєктів.'},
+  ]}]
+},
+{
+  id:'ui', num:'05', title:'UI-компоненти та анімації',
+  note:'17 бібліотек і сервісів для верстки, motion-дизайну та автоматизації — те, що щодня відкриває фронтенд-розробник.',
+  groups:[
+    {items:[
+      {name:'GSAP', url:'https://gsap.com', price:'free', what:'Золотий стандарт scroll-анімацій і motion на сайтах.', why:'ScrollTrigger і морфінг SVG — стандарт для топових сайтів, тепер повністю безкоштовний разом із плагінами.'},
+      {name:'React Bits', url:'https://reactbits.dev', price:'free', what:'Анімовані React-компоненти з готовим кодом.', why:'Швидко додаєш вау-ефект в інтерфейс без написання анімацій з нуля.'},
+      {name:'21st.dev', url:'https://21st.dev/community/components', price:'free', what:'Спільнотна бібліотека React-компонентів найвищої якості.', why:'Копіюєш готовий шматок коду й одразу вставляєш у свій проєкт.'},
+      {name:'Aceternity UI', url:'https://ui.aceternity.com', price:'freemium', what:'Анімовані компоненти на Tailwind + Framer Motion.', why:'Магнітні ефекти, картки й паралакс — усе вже готове до копіювання.'},
+      {name:'HyperUI', url:'https://www.hyperui.dev', price:'free', what:'Безкоштовні Tailwind CSS компоненти.', why:'Кнопки, форми, навігація й картки — open-source, без реєстрації.'},
+      {name:'Uibits', url:'https://uibits.co', price:'freemium', what:'Бібліотека готових UI-елементів для швидкого старту.', why:'Блоки й секції, які просто береш і вставляєш у макет.'},
+      {name:'Figma Community', url:'https://www.figma.com/community', price:'free', what:'UI-кіти, шаблони й компоненти від дизайнерів з усього світу.', why:'Тисячі безкоштовних ресурсів для швидкого прототипування.'},
+      {name:'Siteforge', url:'https://siteforge.io', price:'freemium', what:'Генератор карт сайту, каркасів і контент-структур.', why:'Ідеальний для планування архітектури проєкту перед розробкою.'},
+      {name:'Jitter', url:'https://jitter.video', price:'freemium', what:'Motion та UI-анімації для сайтів і застосунків.', why:'Figma-плагін дозволяє анімувати компоненти прямо в дизайні.'},
+      {name:'Spline', url:'https://spline.design', price:'freemium', what:'3D-редактор прямо у браузері.', why:'Вбудовується на сайт через iframe — інтерактивні 3D-елементи без Blender.'},
+    ]},
+    {label:'Відео, аудіо та автоматизація', items:[
+      {name:'VN — Video Editor', url:'https://apps.apple.com/app/id1343799476', price:'free', what:'Потужний мобільний відеоредактор з ПК-рівнем контролю.', why:'Багатошарова часова шкала й кольорокорекція — безкоштовно і без вотермарки.'},
+      {name:'CapCut', url:'https://www.capcut.com', price:'freemium', what:'Масовий відеомонтаж з AI-фічами.', why:'Авто-субтитри, видалення фону й шаблони — найзручніший редактор для рилсів.'},
+      {name:'HeyGen', url:'https://www.heygen.com', price:'freemium', what:'AI-аватари студійної якості з клонуванням голосу.', why:'Завантажуєш фото чи відео — отримуєш власного AI-ведучого.'},
+      {name:'ElevenLabs', url:'https://elevenlabs.io', price:'freemium', what:'Найкращий синтезатор голосу.', why:'Читає текст так, що не відрізнити від живої людини; клонування голосу.'},
+      {name:'Suno AI', url:'https://suno.com', price:'freemium', what:'Генерує повноцінні пісні з вокалом і музикою за описом.', why:'Швидко закриває питання фонової музики для відео чи проєктів.'},
+      {name:'Make', url:'https://www.make.com/en/register?pc=ponomaral', price:'freemium', what:'Візуальна платформа автоматизації без коду.', why:'З’єднує AI, Figma, Notion і соцмережі в один робочий процес.'},
+      {name:'v0 by Vercel', url:'https://v0.app', price:'freemium', what:'Генератор UI-компонентів і коду від Vercel.', why:'Пишеш промпт — отримуєш готовий інтерфейс і React-код.'},
+    ]},
+  ]
+},
+{
+  id:'stocks', num:'06', title:'Фото, відео та стоки',
+  note:'20 банків контенту — фотостоки й відеостоки, переважно з ліцензією CC0, без атрибуції.',
+  groups:[
+    {label:'Фотостоки', items:[
+      {name:'Unsplash', url:'https://unsplash.com', price:'free', what:'Топові фотографії у форматі CC0.', why:'Без атрибуції — можна використовувати будь-де без питань про ліцензію.'},
+      {name:'Pexels', url:'https://pexels.com', price:'free', what:'Мільйони фото і відео CC0.', why:'Величезний вибір на будь-яку тему для проєктів і мокапів.'},
+      {name:'Pixabay', url:'https://pixabay.com', price:'free', what:'Фото, відео й вектори CC0.', why:'Універсальний банк контенту в одному місці.'},
+      {name:'StockSnap.io', url:'https://stocksnap.io', price:'free', what:'Фотобанк із щотижневим поповненням.', why:'Свіжий контент без потреби шукати по кількох сайтах.'},
+      {name:'Kaboompics', url:'https://kaboompics.com', price:'free', what:'Лайфстайл та інтер’єрні фото з готовою палітрою кольорів.', why:'Зручно одразу підібрати кольорову гаму під фото.'},
+      {name:'Burst (Shopify)', url:'https://burst.shopify.com', price:'free', what:'E-commerce й бізнес-фото від Shopify.', why:'Готові знімки під продуктові сторінки та лендінги.'},
+      {name:'FoodiesFeed', url:'https://foodiesfeed.com', price:'free', what:'Фотобанк виключно про їжу.', why:'Незамінний ресурс для фуд-блогів і ресторанних сайтів.'},
+      {name:'Stockio', url:'https://stockio.com', price:'free', what:'Фото, вектори, іконки й відео разом.', why:'Не треба перемикатись між різними сайтами під різні типи контенту.'},
+      {name:'Stockvault', url:'https://stockvault.net', price:'free', what:'База з 148K+ фото, текстур і графіки.', why:'Великий вибір текстур для фонів і патернів.'},
+      {name:'Magdeleine', url:'https://magdeleine.co', price:'free', what:'Художні кураторські фото, нові щодня.', why:'Підходить, коли треба щось естетичне й не заїжджене.'},
+      {name:'FreePhotos.cc', url:'https://freephotos.cc', price:'free', what:'Агрегатор пошуку по кількох фотостоках одразу.', why:'Економить час — один пошук замість кількох вкладок.'},
+      {name:'Icons8 Photos', url:'https://icons8.com/photos', price:'freemium', what:'Генеративні та реальні фото для UI.', why:'Готові кадри саме під інтерфейсні макети.'},
+    ]},
+    {label:'Відеостоки', items:[
+      {name:'Coverr', url:'https://coverr.co', price:'free', what:'Тисячі HD/4K відеокліпів.', why:'Без реєстрації — одразу качаєш і використовуєш у проєкті.'},
+      {name:'Mixkit', url:'https://mixkit.co', price:'free', what:'Відео, музика, звуки й шаблони CC0.', why:'Все необхідне для монтажу в одному місці.'},
+      {name:'Videezy', url:'https://videezy.com', price:'freemium', what:'HD та 4K відео, AE-шаблони й motion-графіка.', why:'Готові шаблони економлять час на After Effects.'},
+      {name:'Dareful', url:'https://dareful.com', price:'free', what:'4K пейзажі від одного автора, Joel Holland.', why:'Єдиний візуальний стиль для атмосферних b-roll вставок (CC 4.0, потрібна атрибуція).'},
+      {name:'Splitshire', url:'https://splitshire.com', price:'free', what:'Аерозйомка від одного автора з єдиним стилем.', why:'Гарно виглядає в подорожніх і lifestyle проєктах.'},
+      {name:'Motion Places', url:'https://motionplaces.com', price:'free', what:'Відео міст Америки й Європи за локацією.', why:'Зручно шукати по географії, коли потрібен конкретний бекграунд.'},
+      {name:'Pexels Videos', url:'https://pexels.com/videos', price:'free', what:'Величезна база відео CC0.', why:'Той самий Pexels, тільки формат відео.'},
+      {name:'Pixabay Videos', url:'https://pixabay.com/videos', price:'free', what:'Безкоштовні відео без атрибуції.', why:'Швидкий вибір без юридичних питань про використання.'},
+    ]},
+  ]
+},
+{
+  id:'inspire', num:'07', title:'Натхнення і референси',
+  note:'8 джерел, куди варто заглядати перед стартом нового проєкту — від мудбордів до готових hero- і footer-секцій.',
+  groups:[
+    {label:'Концепти', items:[
+      {name:'Cosmos', url:'https://www.cosmos.so/', price:'free', what:'Дошка натхнення нового покоління.', why:'Зручно збирати й організовувати референси в колекції.'},
+      {name:'Pinterest', url:'https://pinterest.com', price:'free', what:'Візуальний пошук ідей за темою.', why:'Найшвидший спосіб зібрати мудборд під будь-яку тему.'},
+      {name:'Dribbble', url:'https://dribbble.com', price:'freemium', what:'Портфоліо дизайнерів з усього світу.', why:'Дивишся, як інші вирішують схожі UI-задачі.'},
+    ]},
+    {label:'Повністю сайти', items:[
+      {name:'Land-book', url:'https://land-book.com', price:'free', what:'Галерея кращих лендінгів.', why:'Підбірка реальних прикладів структури й копірайту лендінгів.'},
+      {name:'Minimal Gallery', url:'https://minimal.gallery', price:'free', what:'Кураторська галерея мінімалістичного дизайну.', why:'Референс, коли треба стриманий, чистий стиль.'},
+      {name:'Awwwards', url:'https://www.awwwards.com', price:'free', what:'Топ веб-дизайну у світі з рейтингом і нагородами.', why:'Орієнтир якості й трендів у веб-дизайні.'},
+    ]},
+    {label:'Окремі секції', items:[
+      {name:'Supahero', url:'https://supahero.io', price:'free', what:'Колекція hero-секцій.', why:'Швидко знайти ідею для першого екрана сайту.'},
+      {name:'Footer Design', url:'https://www.footer.design', price:'free', what:'Колекція footer-секцій.', why:'Той самий принцип, тільки для нижньої частини сайту.'},
+    ]},
+  ]
+},
+{
+  id:'assets', num:'08', title:'Іконки, шрифти і асети',
+  note:'28 бібліотек іконок, ілюстрацій, шрифтів і генераторів кольору — база будь-якого дизайн-системного проєкту.',
+  groups:[
+    {label:'Іконки', items:[
+      {name:'Ionicons', url:'https://ionic.io/ionicons', price:'free', what:'Відкриті іконки для веб і мобайлу.', why:'Легкі SVG-іконки, які добре лягають у будь-який інтерфейс.'},
+      {name:'Flaticon', url:'https://flaticon.com', price:'freemium', what:'20M+ іконок у різних стилях.', why:'Величезний вибір, безкоштовно з атрибуцією.'},
+      {name:'Feather Icons', url:'https://feathericons.com', price:'free', what:'Мінімальні open-source іконки.', why:'MIT-ліцензія — можна використовувати без обмежень навіть комерційно.'},
+      {name:'Noun Project', url:'https://thenounproject.com', price:'freemium', what:'Символи практично на будь-яку тему.', why:'Зручно, коли потрібна вузькоспеціалізована піктограма.'},
+      {name:'Icons8', url:'https://icons8.com', price:'freemium', what:'Іконки, фото, ілюстрації й музика в одному місці.', why:'Один акаунт закриває кілька типів асетів одразу.'},
+      {name:'Font Awesome', url:'https://fontawesome.com', price:'freemium', what:'Стандарт веб-іконок у розробці.', why:'Найбільш впізнавана й підтримувана бібліотека іконок для коду.'},
+      {name:'CSS.gg', url:'https://css.gg', price:'free', what:'700+ іконок на чистому CSS.', why:'Не треба підключати SVG чи шрифти — все живе в CSS.'},
+      {name:'Iconscout', url:'https://iconscout.com', price:'freemium', what:'Іконки, 3D-об’єкти й Lottie-анімації.', why:'Плагін для Figma пришвидшує роботу прямо в дизайн-файлі.'},
+    ]},
+    {label:'Ілюстрації', items:[
+      {name:'unDraw', url:'https://undraw.co', price:'free', what:'SVG-ілюстрації з можливістю змінити колір під бренд.', why:'Швидко закриваєш порожні стани й лендінги без замовлення ілюстратора.'},
+      {name:'Open Peeps', url:'https://openpeeps.com', price:'free', what:'Рукодільні персонажі-скетчі, які можна комбінувати.', why:'CC0-ліцензія — вільно для будь-яких проєктів.'},
+      {name:'Absurd Design', url:'https://absurd.design', price:'freemium', what:'Сюрреалістичні авторські ілюстрації.', why:'Виділяють проєкт серед типових стокових картинок.'},
+      {name:'Shapefest', url:'https://www.shapefest.com', price:'free', what:'200K+ 3D-форм у PNG з прозорим фоном.', why:'Готові 3D-об’єкти для фонів і декору без 3D-редактора.'},
+      {name:'Humaaans', url:'https://www.humaaans.com', price:'free', what:'Бібліотека людських фігур у стилі мікс-і-матч.', why:'Компонуєш власні сцени з готових частин персонажів.'},
+      {name:'DrawKit', url:'https://drawkit.com', price:'freemium', what:'Якісні набори ілюстрацій за темами.', why:'Узгоджений стиль для цілого проєкту, а не розрізнені картинки.'},
+      {name:'Pixcap', url:'https://pixcap.com', price:'freemium', what:'3D-мокапи та ілюстрації онлайн.', why:'Не потрібен Blender чи Cinema 4D для базових 3D-сцен.'},
+      {name:'Streamline', url:'https://streamlinehq.com', price:'freemium', what:'60K+ іконок та ілюстрацій в єдиних наборах.', why:'Легко тримати візуальну консистентність по всьому проєкту.'},
+    ]},
+    {label:'Шрифти', items:[
+      {name:'Google Fonts', url:'https://fonts.google.com', price:'free', what:'Стандартна бібліотека з 1500+ безкоштовних шрифтів.', why:'Найшвидший спосіб підключити шрифт на сайт через CDN.'},
+      {name:'Font Squirrel', url:'https://fontsquirrel.com', price:'free', what:'Шрифти, вільні для комерційного використання.', why:'Не треба перевіряти ліцензію окремо — тут усе вже чисто.'},
+      {name:'Befonts', url:'https://befonts.com', price:'free', what:'Якісні преміум-шрифти безкоштовно.', why:'Виглядають дорожче за типові безкоштовні гарнітури.'},
+      {name:'FontSpace', url:'https://fontspace.com', price:'free', what:'Велика база шрифтів з фільтром за категоріями.', why:'Зручний пошук, коли є чітке уявлення про стиль.'},
+      {name:'DaFont', url:'https://dafont.com', price:'free', what:'Класична база декоративних шрифтів.', why:'Добре підходить для афіш, леттерингу й акцентних заголовків.'},
+      {name:'Fonts Arena', url:'https://fontsarena.com', price:'free', what:'Кураторська добірка шрифтів з описом і готовими парами.', why:'Не треба самому підбирати пару display + body — вже зроблено.'},
+    ]},
+    {label:'Кольори та градієнти', items:[
+      {name:'Coolors', url:'https://coolors.co', price:'free', what:'Генератор кольорових палітр.', why:'Пробіл — і нова палітра; швидко знаходиш поєднання кольорів.'},
+      {name:'Mesh Gradients', url:'https://meshgradients.in', price:'free', what:'Mesh-градієнти для фонів.', why:'Готові плавні градієнти без ручного налаштування в CSS.'},
+      {name:'Noise & Gradient', url:'https://noiseandgradient.com', price:'free', what:'Градієнти з текстурою зерна — тренд 2026.', why:'Додає фону глибини замість плаского кольору.'},
+      {name:'WebGradients', url:'https://webgradients.com', price:'free', what:'180 готових CSS-градієнтів.', why:'Копіюєш код і одразу вставляєш у проєкт.'},
+      {name:'Picular', url:'https://picular.co', price:'free', what:'Підбирає кольори, пов’язані з будь-яким словом.', why:'Зручно, коли потрібен колір, що асоціюється з конкретним поняттям.'},
+      {name:'CSS Gradient', url:'https://cssgradient.io', price:'free', what:'Генератор градієнтів з CSS-кодом у реальному часі.', why:'Бачиш результат одразу й копіюєш готовий код.'},
+    ]},
+  ]
+},
+];
+
+const externalIcon = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M8 7h9v9"/></svg>`;
+
+function cardHTML(item){
+  return `
+  <div class="card" data-price="${item.price}" data-search="${(item.name+' '+item.what+' '+item.why).toLowerCase()}">
+    <a class="overlay-link" href="${item.url}" target="_blank" rel="noopener"></a>
+    <div class="card-head">
+      <div class="card-name">${item.name} ${externalIcon}</div>
+      <span class="badge ${item.price}">${priceLabel[item.price]}</span>
+    </div>
+    <div class="card-what">${item.what}</div>
+    <div class="card-why"><b>Навіщо</b>${item.why}</div>
+  </div>`;
+}
+
+function sectionHTML(sec){
+  const totalCount = sec.groups.reduce((a,g)=>a+g.items.length,0);
+  const groupsHTML = sec.groups.map(g => `
+    ${g.label ? `<div class="group-label">${g.label}</div>` : ''}
+    <div class="grid">${g.items.map(cardHTML).join('')}</div>
+  `).join('');
+  return `
+  <section id="${sec.id}">
+    <div class="sec-head">
+      <span class="sec-num">${sec.num}</span>
+      <span class="sec-title">${sec.title}</span>
+      <span class="sec-count">${totalCount} ресурсів</span>
+    </div>
+    <p class="sec-note">${sec.note}</p>
+    ${groupsHTML}
+  </section>
+  <div class="divider"></div>
+  `;
+}
+
+const main = document.getElementById('main');
+main.innerHTML = DATA.map(sectionHTML).join('');
+
+// stats: count free-only
+const allItems = DATA.flatMap(s => s.groups.flatMap(g => g.items));
+document.getElementById('free-count').textContent = allItems.filter(i => i.price === 'free').length;
+
+// filtering
+const searchInput = document.getElementById('search');
+const filterBtns = document.querySelectorAll('.filter-btn');
+let activePrice = 'all';
+
+function applyFilters(){
+  const q = searchInput.value.trim().toLowerCase();
+  let visibleTotal = 0;
+  document.querySelectorAll('section').forEach(sec => {
+    let sectionVisible = 0;
+    sec.querySelectorAll('.card').forEach(card => {
+      const matchesPrice = activePrice === 'all' || card.dataset.price === activePrice;
+      const matchesSearch = !q || card.dataset.search.includes(q);
+      const show = matchesPrice && matchesSearch;
+      card.classList.toggle('hidden', !show);
+      if(show) sectionVisible++;
+    });
+    // hide empty groups
+    sec.querySelectorAll('.grid').forEach(grid => {
+      const anyVisible = [...grid.children].some(c => !c.classList.contains('hidden'));
+      grid.classList.toggle('hidden', !anyVisible);
+      const label = grid.previousElementSibling;
+      if(label && label.classList.contains('group-label')) label.classList.toggle('hidden', !anyVisible);
+    });
+    sec.classList.toggle('hidden', sectionVisible === 0);
+    sec.nextElementSibling.classList.toggle('hidden', sectionVisible === 0);
+    visibleTotal += sectionVisible;
+  });
+  document.getElementById('count-info').textContent = (q || activePrice !== 'all')
+    ? `Показано ${visibleTotal} з 111 ресурсів`
+    : '';
+}
+
+searchInput.addEventListener('input', applyFilters);
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activePrice = btn.dataset.price;
+    applyFilters();
+  });
+});
+</script>
+</body>
+</html>
